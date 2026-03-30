@@ -11,63 +11,62 @@ if(user == null){
 }
 
 // DEFAULT VALUES
-String hr="--", bp="--", steps="--", cal="--";
-String dietType="No Diet", fitness="No Data";
-String medicine="No Medication", medTime="--";
-String appointment="No Appointment";
+int hr = 0, steps = 0, calories = 0;
+String bp = "--";
+String diet = "No Diet";
+String fitness = "No Data";
+String medicine = "No Medicine";
+String appointment = "No Appointment";
 
-Connection con = null;
-
-try {
+try{
     Class.forName("com.mysql.cj.jdbc.Driver");
-    con = DriverManager.getConnection(
+    Connection con = DriverManager.getConnection(
         "jdbc:mysql://localhost:3306/health_monitoring","root","naincy37");
 
-    // 🔹 HEALTH
+    // ✅ HEALTH DATA (latest)
     PreparedStatement ps1 = con.prepareStatement(
         "SELECT * FROM health_data WHERE user_id=? ORDER BY record_date DESC LIMIT 1");
     ps1.setInt(1, userId);
     ResultSet rs1 = ps1.executeQuery();
 
     if(rs1.next()){
-        hr = rs1.getString("heart_rate");
+        hr = rs1.getInt("heart_rate");
         bp = rs1.getString("blood_pressure");
-        steps = rs1.getString("steps");
-        cal = rs1.getString("calories");
+        steps = rs1.getInt("steps");
+        calories = rs1.getInt("calories");
     }
 
-    // 🔹 DIET (only type)
+    // ✅ DIET
     PreparedStatement ps2 = con.prepareStatement(
         "SELECT diet_type FROM diet WHERE user_id=? ORDER BY record_date DESC LIMIT 1");
     ps2.setInt(1, userId);
     ResultSet rs2 = ps2.executeQuery();
 
     if(rs2.next()){
-        dietType = rs2.getString("diet_type");
+        diet = rs2.getString("diet_type");
     }
 
-    // 🔹 FITNESS
+    // ✅ FITNESS
     PreparedStatement ps3 = con.prepareStatement(
         "SELECT steps FROM fitness WHERE user_id=? ORDER BY record_date DESC LIMIT 1");
     ps3.setInt(1, userId);
     ResultSet rs3 = ps3.executeQuery();
 
     if(rs3.next()){
-        fitness = "Steps: " + rs3.getString("steps");
+        fitness = "Steps: " + rs3.getInt("steps");
     }
 
-    // 🔹 MEDICATION
+    // ✅ MEDICATION
     PreparedStatement ps4 = con.prepareStatement(
         "SELECT medicine_name,time FROM medication WHERE user_id=? ORDER BY start_date DESC LIMIT 1");
     ps4.setInt(1, userId);
     ResultSet rs4 = ps4.executeQuery();
 
     if(rs4.next()){
-        medicine = rs4.getString("medicine_name");
-        medTime = rs4.getString("time");
+        medicine = rs4.getString("medicine_name") + " at " + rs4.getString("time");
     }
 
-    // 🔹 APPOINTMENT
+    // ✅ APPOINTMENT
     PreparedStatement ps5 = con.prepareStatement(
         "SELECT doctor_name,appointment_date FROM appointments WHERE user_id=? ORDER BY appointment_date DESC LIMIT 1");
     ps5.setInt(1, userId);
@@ -169,22 +168,17 @@ body {
 
 <body>
 
-<div class="header">
-    <h2>Welcome <%= user %> 👋</h2>
-</div>
-
-<!-- HEALTH -->
 <div class="cards">
-    <div class="card">Heart Rate<br><b><%= hr %></b></div>
-    <div class="card">BP<br><b><%= bp %></b></div>
-    <div class="card">Steps<br><b><%= steps %></b></div>
-    <div class="card">Calories<br><b><%= cal %></b></div>
+<div class="card">Heart Rate<br><b><%= hr %></b></div>
+<div class="card">BP<br><b><%= bp %></b></div>
+<div class="card">Steps<br><b><%= steps %></b></div>
+<div class="card">Calories<br><b><%= calories %></b></div>
 </div>
 
 <!-- DIET -->
-<div class="card section">
+<div class="card">
     <h3>Diet Plan</h3>
-    <p><b><%= dietType %></b></p>
+    <p><b><%= diet %></b></p>
 </div>
 
 <!-- FITNESS -->
@@ -196,7 +190,7 @@ body {
 <!-- MEDICATION -->
 <div class="card">
     <h3>Medication Reminder</h3>
-    <p><b><%= medicine %></b> at <%= medTime %></p>
+    <p><%= medicine %></p>
 </div>
 
 <!-- APPOINTMENT -->
