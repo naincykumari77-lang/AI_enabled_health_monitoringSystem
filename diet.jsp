@@ -18,7 +18,7 @@ try {
     Class.forName("com.mysql.cj.jdbc.Driver");
     con = DriverManager.getConnection(
         "jdbc:mysql://localhost:3306/health_monitoring","root","naincy37");
-
+    
     PreparedStatement ps = con.prepareStatement(
         "INSERT INTO diet(user_id,weight,height,bmi,diet_type,calories,protein,carbs,fats,meal_plan,record_date) VALUES (?,?,?,?,?,?,?,?,?,?,CURDATE())");
 

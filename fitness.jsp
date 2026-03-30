@@ -1,6 +1,36 @@
 <%@ page import="java.sql.*" %>
 
 <%
+int userId = (int) session.getAttribute("user_id");
+
+String weight="", height="", steps="", calories="";
+
+try {
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    Connection con = DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/health_monitoring","root","naincy37");
+
+    PreparedStatement ps = con.prepareStatement(
+        "SELECT * FROM health_data WHERE user_id=? ORDER BY id DESC LIMIT 1");
+
+    ps.setInt(1, userId);
+
+    ResultSet rs = ps.executeQuery();
+
+    if(rs.next()){
+        weight = rs.getString("weight");
+        height = rs.getString("height");
+        steps = rs.getString("steps");
+        calories = rs.getString("calories");
+    }
+
+} catch(Exception e){
+    out.println(e);
+}
+%>
+<%@ page import="java.sql.*" %>
+
+<%
 String workout = request.getParameter("workout");
 String time = request.getParameter("time");
 String steps = request.getParameter("steps");
