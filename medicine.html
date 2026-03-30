@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Medication</title>
+
+<style>
+body { font-family:'Segoe UI'; background:#f4f6f9; margin:0; }
+.center { display:flex; justify-content:center; align-items:center; height:100vh; }
+.box { background:white; padding:30px; border-radius:10px; width:350px; text-align:center; }
+input, button { width:100%; padding:10px; margin:10px 0; }
+button { background:#2c3e50; color:white; border:none; }
+</style>
+
+<script>
+function validateMedicine() {
+    let med = document.getElementById("med").value;
+    let dosage = document.getElementById("dosage").value;
+    let time = document.getElementById("time").value;
+
+    if(med==="" || dosage==="" || time===""){
+        alert("Please fill all medicine details!");
+        return false;
+    }
+
+    alert("Medicine saved successfully!");
+    return true;
+}
+</script>
+
+</head>
+
+<body>
+<div class="center">
+<div class="box">
+<h2>Medication</h2>
+
+<!-- ✅ FIXED FORM -->
+<form action="medicine.jsp" method="post" onsubmit="return validateMedicine()">
+
+<input type="text" id="med" name="med" placeholder="Medicine Name">
+<input type="text" id="dosage" name="dosage" placeholder="Dosage (e.g. 2 times/day)">
+<input type="time" id="time" name="time">
+
+<input type="date" name="start">
+<input type="date" name="end">
+
+<button type="submit">Save</button>
+
+</form>
+
+</div>
+</div>
+</body>
+</html>

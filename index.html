@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Health Dashboard</title>
+
+<style>
+body { margin:0; font-family:'Segoe UI'; }
+
+/* SIDEBAR */
+.sidebar {
+    width:240px;
+    height:100vh;
+    background:#2f3e4e;
+    position:fixed;
+    color:white;
+}
+
+.sidebar h2 {
+    text-align:center;
+    padding:20px 0;
+}
+
+.sidebar a {
+    display:block;
+    padding:12px 20px;
+    color:#cfd8dc;
+    text-decoration:none;
+}
+
+.sidebar a:hover {
+    background:#3e4f61;
+}
+
+/* MAIN AREA */
+.main {
+    margin-left:240px;
+    height:100vh;
+}
+
+/* IFRAME */
+iframe {
+    width:100%;
+    height:100%;
+    border:none;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>Health App</h2>
+
+    <a href="dashboard.jsp" target="frame">Dashboard</a>
+    <a href="health.html" target="frame">Health Data</a>
+    <a href="diet.html" target="frame">Diet Plan</a>
+    <a href="appointment.html" target="frame">Appointments</a>
+    <a href="medicine.html" target="frame">Medication</a>
+    <a href="fitness.html" target="frame">Fitness</a>
+
+    <a href="login.html" target="frame">Login</a>
+    <a href="register.html" target="frame">Register</a>
+    <a href="logout.jsp" target="frame">Logout</a>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+    <iframe name="frame" src="dashboard.html"></iframe>
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Health Data</title>
+
+<style>
+body { font-family:'Segoe UI'; background:#f4f6f9; margin:0; }
+.center { display:flex; justify-content:center; align-items:center; height:100vh; }
+.box { background:white; padding:30px; border-radius:10px; width:350px; text-align:center; }
+input, button { width:100%; padding:10px; margin:10px 0; }
+button { background:#2c3e50; color:white; border:none; }
+</style>
+
+<script>
+function validateHealth() {
+    let hr = document.getElementById("hr").value;
+    let bp = document.getElementById("bp").value;
+    let steps = document.getElementById("steps").value;
+    let cal = document.getElementById("cal").value;
+
+    if(hr==="" || bp==="" || steps==="" || cal===""){
+        alert("Please fill all health details!");
+        return false;
+    }
+
+    alert("Health data saved successfully!");
+    return true;
+}
+</script>
+
+</head>
+
+<body>
+<div class="center">
+<div class="box">
+<h2>Health Data</h2>
+
+<!-- ✅ IMPORTANT FIX -->
+<form action="health.jsp" method="post" onsubmit="return validateHealth()">
+
+<input type="number" id="hr" name="hr" placeholder="Heart Rate">
+<input type="text" id="bp" name="bp" placeholder="Blood Pressure">
+<input type="number" id="steps" name="steps" placeholder="Steps">
+<input type="number" id="cal" name="cal" placeholder="Calories">
+
+<button type="submit">Save</button>
+</form>
+
+</div>
+</div>
+</body>
+</html>

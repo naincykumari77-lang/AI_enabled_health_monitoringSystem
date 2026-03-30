@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Doctor Appointment</title>
+
+<style>
+body {
+    margin:0;
+    font-family:'Segoe UI';
+    background:#f4f6f9;
+}
+
+/* Container */
+.container {
+    padding:20px;
+}
+
+/* Card */
+.card {
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    max-width:600px;
+    margin:auto;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Inputs */
+input, select, textarea, button {
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+/* Button */
+button {
+    background:#2c3e50;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+button:hover {
+    background:#1abc9c;
+}
+
+/* Output box */
+.suggestion {
+    margin-top:10px;
+    padding:10px;
+    background:#e3f2fd;
+    border-left:5px solid #2196f3;
+    display:none;
+}
+</style>
+
+<script>
+
+// AI DOCTOR SUGGESTION
+function suggestDoctor() {
+
+    let symptoms = document.getElementById("symptoms").value.toLowerCase();
+    let suggestion = document.getElementById("suggestion");
+
+    let doctor = "";
+
+    if(symptoms.includes("chest") || symptoms.includes("heart")){
+        doctor = "Suggested: Cardiologist";
+    }
+    else if(symptoms.includes("skin")){
+        doctor = "Suggested: Dermatologist";
+    }
+    else if(symptoms.includes("fever") || symptoms.includes("cold")){
+        doctor = "Suggested: General Physician";
+    }
+    else if(symptoms.includes("eye")){
+        doctor = "Suggested: Ophthalmologist";
+    }
+    else {
+        doctor = "Suggested: General Physician";
+    }
+
+    suggestion.innerText = doctor;
+    suggestion.style.display = "block";
+}
+
+// VALIDATION
+function validateAppointment() {
+
+    let name = document.getElementById("name").value;
+    let age = document.getElementById("age").value;
+    let doctor = document.getElementById("doctor").value;
+    let date = document.getElementById("date").value;
+    let time = document.getElementById("time").value;
+    let symptoms = document.getElementById("symptoms").value;
+
+    if(name==="" || age==="" || doctor==="" || date==="" || time==="" || symptoms===""){
+        alert("Please fill all required fields!");
+        return false;
+    }
+
+    alert("Appointment Booked Successfully!");
+    return true;
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+<h2>Book Doctor Appointment 🏥</h2>
+
+<form action="appiontment.jsp" method="post" onsubmit="return validateAppointment()">
+
+<input type="text" id="name" name="name" placeholder="Patient Name">
+
+<input type="number" id="age" name="age" placeholder="Age">
+
+<select id="gender" name="gender">
+    <option value="">Select Gender</option>
+    <option>Male</option>
+    <option>Female</option>
+</select>
+
+<input type="text" id="contact" name="contact" placeholder="Contact Number">
+
+<input type="text" id="doctor" name="doctor" placeholder="Doctor Name">
+
+<select name="specialization">
+    <option value="">Select Specialization</option>
+    <option>Cardiologist</option>
+    <option>Dermatologist</option>
+    <option>General Physician</option>
+    <option>Ophthalmologist</option>
+</select>
+
+<input type="date" id="date" name="date">
+<input type="time" id="time" name="time">
+
+<textarea id="symptoms" name="symptoms" placeholder="Enter Symptoms"></textarea>
+
+<select name="mode">
+    <option value="">Mode of Appointment</option>
+    <option>In-Person</option>
+    <option>Online</option>
+</select>
+
+<button type="submit">Book Appointment</button>
+
+</form>
+
+<div id="suggestion" class="suggestion"></div>
+
+</div>
+
+</div>
+
+</body>
+</html>

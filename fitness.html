@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Fitness Tracker</title>
+
+<style>
+body {
+    margin:0;
+    font-family:'Segoe UI';
+    background:#f4f6f9;
+}
+
+/* Container */
+.container {
+    padding:20px;
+}
+
+/* Card */
+.card {
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    max-width:550px;
+    margin:auto;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Inputs */
+input, select, button {
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+/* Button */
+button {
+    background:#2c3e50;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+button:hover {
+    background:#1abc9c;
+}
+
+/* Output box */
+.output {
+    margin-top:15px;
+    padding:12px;
+    background:#e8f5e9;
+    border-left:5px solid #4caf50;
+    display:none;
+}
+</style>
+
+<script>
+
+// BMI CALCULATION
+function calculateBMI() {
+    let weight = document.getElementById("weight").value;
+    let height = document.getElementById("height").value;
+
+    if(weight === "" || height === "") return;
+
+    let h = height / 100;
+    let bmi = (weight / (h * h)).toFixed(2);
+
+    document.getElementById("bmi").value = bmi;
+}
+
+// FITNESS ANALYSIS (AI LOGIC)
+function analyzeFitness() {
+
+    let steps = document.getElementById("steps").value;
+    let goal = document.getElementById("goal").value;
+    let workout = document.getElementById("workout").value;
+
+    let message = "";
+
+    if(steps >= goal && goal !== ""){
+        message = "Goal Achieved 🎉 Great job!";
+    } else {
+        message = "Keep going 💪 You can do it!";
+    }
+
+    // Workout suggestion
+    if(workout === "Running"){
+        message += "\nTip: Stay hydrated!";
+    }
+    else if(workout === "Yoga"){
+        message += "\nTip: Focus on breathing.";
+    }
+    else if(workout === "Gym"){
+        message += "\nTip: Maintain proper form.";
+    }
+
+    document.getElementById("result").innerText = message;
+    document.getElementById("result").style.display = "block";
+}
+
+// VALIDATION
+function validateFitness() {
+
+    let workout = document.getElementById("workout").value;
+    let time = document.getElementById("time").value;
+    let steps = document.getElementById("steps").value;
+    let calories = document.getElementById("calories").value;
+
+    if(workout==="" || time==="" || steps==="" || calories===""){
+        alert("Please fill all required fields!");
+        return false;
+    }
+
+    analyzeFitness();
+
+    alert("Fitness data saved successfully!");
+    return true; // prevent reload for demo
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+<h2>Fitness Tracker 🏃</h2>
+<form action="fitness.jsp" method="post" onsubmit="return validateFitness()">
+
+<!-- USER DETAILS -->
+<input type="number" id="weight" name="weight" placeholder="Weight (kg)" onkeyup="calculateBMI()">
+<input type="number" id="height" name="height" placeholder="Height (cm)" onkeyup="calculateBMI()">
+<input type="text" id="bmi" name="bmi" placeholder="BMI" readonly>
+
+<!-- FITNESS INPUT -->
+<select id="workout" name="workout">
+    <option value="">Select Workout Type</option>
+    <option>Walking</option>
+    <option>Running</option>
+    <option>Gym</option>
+    <option>Yoga</option>
+    <option>Cycling</option>
+</select>
+
+<input type="number" id="time" name="time" placeholder="Workout Time (minutes)">
+<input type="number" id="steps" name="steps" placeholder="Steps">
+<input type="number" id="calories" name="calories" placeholder="Calories Burned">
+
+<input type="number" id="goal" name="goal" placeholder="Daily Step Goal (optional)">
+
+<button type="submit">Save Fitness</button>
+
+</form>
+
+
+<!-- OUTPUT -->
+<div id="result" class="output"></div>
+
+</div>
+
+</div>
+
+</body>
+</html>

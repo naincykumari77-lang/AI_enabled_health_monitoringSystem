@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AI Diet Plan</title>
+
+<style>
+body {
+    margin:0;
+    font-family:'Segoe UI';
+    background:#f4f6f9;
+}
+
+/* Container */
+.container {
+    padding:20px;
+}
+
+/* Card */
+.card {
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    max-width:550px;
+    margin:auto;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Inputs */
+input, select, textarea, button {
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+/* Button */
+button {
+    background:#2c3e50;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+button:hover {
+    background:#1abc9c;
+}
+
+/* Output box */
+.output {
+    margin-top:15px;
+    padding:12px;
+    background:#e8f5e9;
+    border-left:5px solid #4caf50;
+    display:none;
+}
+</style>
+
+<script>
+
+// AUTO DIET GENERATION
+function generateDiet() {
+
+    let type = document.getElementById("dietType").value;
+    let calories = document.getElementById("calories");
+    let plan = "";
+    let protein = "", carbs = "", fats = "";
+
+    if(type === "weightLoss"){
+        calories.value = 1500;
+        protein = "80g"; carbs = "150g"; fats = "40g";
+        plan = "Breakfast: Oats\nLunch: Salad + Dal\nDinner: Soup + Roti";
+    }
+    else if(type === "weightGain"){
+        calories.value = 2800;
+        protein = "120g"; carbs = "300g"; fats = "80g";
+        plan = "Breakfast: Eggs + Milk\nLunch: Rice + Chicken\nDinner: Paneer + Roti";
+    }
+    else if(type === "diabetic"){
+        calories.value = 1800;
+        protein = "70g"; carbs = "200g"; fats = "50g";
+        plan = "Breakfast: Brown Bread\nLunch: Vegetables\nDinner: Chapati";
+    }
+    else {
+        calories.value = 2000;
+        protein = "60g"; carbs = "250g"; fats = "70g";
+        plan = "Balanced Diet";
+    }
+
+    document.getElementById("protein").value = protein;
+    document.getElementById("carbs").value = carbs;
+    document.getElementById("fats").value = fats;
+    document.getElementById("mealPlan").value = plan;
+}
+
+// BMI CALCULATION
+function calculateBMI() {
+    let weight = document.getElementById("weight").value;
+    let height = document.getElementById("height").value;
+
+    if(weight === "" || height === "") return;
+
+    let h = height / 100;
+    let bmi = (weight / (h * h)).toFixed(2);
+
+    document.getElementById("bmi").value = bmi;
+}
+
+// VALIDATION
+function validateDiet() {
+
+    let type = document.getElementById("dietType").value;
+    let calories = document.getElementById("calories").value;
+
+    if(type === "" || calories === ""){
+        alert("Please select diet type and generate plan!");
+        return false;
+    }
+
+    alert("Diet Plan Generated Successfully!");
+    return true;
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+<h2>AI Diet Plan Generator 🤖</h2>
+<form action="diet.jsp" method="post" onsubmit="return validateDiet()">
+
+<input type="number" id="weight" name="weight" placeholder="Weight (kg)" onkeyup="calculateBMI()">
+<input type="number" id="height" name="height" placeholder="Height (cm)" onkeyup="calculateBMI()">
+<input type="text" id="bmi" name="bmi" placeholder="BMI" readonly>
+
+<select id="dietType" name="dietType" onchange="generateDiet()">
+    <option value="">Select Diet Type</option>
+    <option value="weightLoss">Weight Loss</option>
+    <option value="weightGain">Weight Gain</option>
+    <option value="diabetic">Diabetic</option>
+    <option value="normal">Normal</option>
+</select>
+
+<input type="number" id="calories" name="calories" readonly>
+<input type="text" id="protein" name="protein" readonly>
+<input type="text" id="carbs" name="carbs" readonly>
+<input type="text" id="fats" name="fats" readonly>
+
+<textarea id="mealPlan" name="mealPlan" rows="5" readonly></textarea>
+
+<button type="submit">Save Diet Plan</button>
+
+</form>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

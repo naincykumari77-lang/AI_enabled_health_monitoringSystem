@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+
+<style>
+body { font-family:'Segoe UI'; background:#f4f6f9; margin:0; padding:20px; }
+
+.card {
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.cards {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+#calendar {
+    display:grid;
+    grid-template-columns:repeat(10,1fr);
+    gap:5px;
+}
+
+.day {
+    padding:10px;
+    background:#ddd;
+    text-align:center;
+    border-radius:5px;
+}
+
+.active {
+    background:#4caf50;
+    color:white;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+<h2 id="welcome">Welcome 👋</h2>
+</div>
+
+<div class="cards">
+<div class="card">Heart Rate<br><b>72</b></div>
+<div class="card">BP<br><b>120/80</b></div>
+<div class="card">Steps<br><b>5000</b></div>
+<div class="card">Calories<br><b>1800</b></div>
+</div>
+
+<div class="card">
+<h3>Activity</h3>
+<div id="calendar"></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(7,1fr);font-weight:bold;">
+    <div>Sun</div><div>Mon</div><div>Tue</div>
+    <div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+</div>
+<script src="dashboard.js"></script>
+
+</body>
+</html>
