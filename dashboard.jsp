@@ -167,6 +167,10 @@ body {
 </head>
 
 <body>
+    <div class="card">
+    <h2>Welcome <%= user %> 👋</h2>
+</div>
+
 
 <div class="cards">
 <div class="card">Heart Rate<br><b><%= hr %></b></div>
