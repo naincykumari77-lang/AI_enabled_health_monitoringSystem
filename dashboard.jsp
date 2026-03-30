@@ -25,7 +25,7 @@ try{
 
     // ✅ HEALTH DATA (latest)
     PreparedStatement ps1 = con.prepareStatement(
-        "SELECT * FROM health_data WHERE user_id=? ORDER BY record_date DESC LIMIT 1");
+        "SELECT * FROM health_data WHERE user_id=? ORDER BY id DESC LIMIT 1");
     ps1.setInt(1, userId);
     ResultSet rs1 = ps1.executeQuery();
 
@@ -38,7 +38,7 @@ try{
 
     // ✅ DIET
     PreparedStatement ps2 = con.prepareStatement(
-        "SELECT diet_type FROM diet WHERE user_id=? ORDER BY record_date DESC LIMIT 1");
+        "SELECT diet_type FROM diet WHERE user_id=? ORDER BY id DESC LIMIT 1");
     ps2.setInt(1, userId);
     ResultSet rs2 = ps2.executeQuery();
 
@@ -48,7 +48,7 @@ try{
 
     // ✅ FITNESS
     PreparedStatement ps3 = con.prepareStatement(
-        "SELECT steps FROM fitness WHERE user_id=? ORDER BY record_date DESC LIMIT 1");
+        "SELECT steps FROM fitness WHERE user_id=? ORDER BY id DESC LIMIT 1");
     ps3.setInt(1, userId);
     ResultSet rs3 = ps3.executeQuery();
 
