@@ -29,7 +29,7 @@ try {
     ps.setString(2, weight);
     ps.setString(3, height);
     ps.setDouble(4, Double.parseDouble(bmi));
-    ps.setString(5, diet_type);
+    ps.setString(5, dietType);
     ps.setInt(6, Integer.parseInt(calories));
     ps.setString(7, protein);
     ps.setString(8, carbs);
