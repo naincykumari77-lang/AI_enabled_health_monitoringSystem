@@ -25,6 +25,8 @@ function validateMedicine() {
     alert("Medicine saved successfully!");
     return true;
 }
+localStorage.setItem("medicine", document.getElementById("med").value);
+localStorage.setItem("medTime", document.getElementById("time").value);
 </script>
 
 </head>

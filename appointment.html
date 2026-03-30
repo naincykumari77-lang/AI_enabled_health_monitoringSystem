@@ -105,6 +105,8 @@ function validateAppointment() {
     alert("Appointment Booked Successfully!");
     return true;
 }
+localStorage.setItem("appointment", document.getElementById("doctor").value);
+localStorage.setItem("appDate", document.getElementById("date").value);
 
 </script>
 

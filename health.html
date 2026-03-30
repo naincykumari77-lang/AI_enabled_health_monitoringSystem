@@ -48,5 +48,27 @@ function validateHealth() {
 
 </div>
 </div>
+<script>
+function validateHealth() {
+    let hr = document.getElementById("hr").value;
+    let bp = document.getElementById("bp").value;
+    let steps = document.getElementById("steps").value;
+    let cal = document.getElementById("cal").value;
+
+    if(hr==="" || bp==="" || steps==="" || cal===""){
+        alert("Please fill all health details!");
+        return false;
+    }
+
+    // ✅ STORE DATA
+    localStorage.setItem("hr", hr);
+    localStorage.setItem("bp", bp);
+    localStorage.setItem("steps", steps);
+    localStorage.setItem("cal", cal);
+
+    alert("Health data saved!");
+    return true;
+}
+</script>
 </body>
 </html>
