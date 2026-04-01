@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Emergency Alert</title>
+
+<style>
+body {
+    font-family: 'Segoe UI';
+    background:#f4f6f9;
+    margin:0;
+}
+
+.container {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.card {
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    width:350px;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+button {
+    width:100%;
+    padding:12px;
+    background:red;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover {
+    background:darkred;
+}
+</style>
+
+<script>
+function sendAlert() {
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position){
+
+            let lat = position.coords.latitude;
+            let lon = position.coords.longitude;
+
+            document.getElementById("lat").value = lat;
+            document.getElementById("lon").value = lon;
+
+            document.getElementById("form").submit();
+        });
+    } else {
+        alert("Geolocation not supported");
+    }
+}
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+<div class="card">
+
+<h2>🚨 Emergency Alert</h2>
+<p>Send alert to emergency contact</p>
+
+<form id="form" action="emergency.jsp" method="post">
+<input type="hidden" name="lat" id="lat">
+<input type="hidden" name="lon" id="lon">
+
+<button type="button" onclick="sendAlert()">Send Emergency Alert</button>
+</form>
+
+</div>
+</div>
+
+</body>
+</html>

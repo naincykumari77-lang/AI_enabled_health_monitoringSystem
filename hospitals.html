@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Nearby Hospitals</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
+
+<style>
+body { margin:0; }
+#map { height:100vh; }
+</style>
+</head>
+
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+<script>
+
+function loadMap(lat, lon){
+
+    let map = L.map('map').setView([lat, lon], 14);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    // 👤 Your location
+    L.marker([lat, lon]).addTo(map)
+        .bindPopup("You are here")
+        .openPopup();
+
+    // 🏥 Icon
+    let hospitalIcon = L.icon({
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/2967/2967350.png',
+        iconSize: [30, 30]
+    });
+
+    // 🔥 TRY FETCH
+    fetch(`https://overpass-api.de/api/interpreter?data=
+    [out:json];
+    node["amenity"="hospital"](around:3000,${lat},${lon});
+    out;`)
+    .then(res => res.json())
+    .then(data => {
+
+        console.log("API DATA:", data); // 🔍 DEBUG
+
+        if(data.elements.length === 0){
+            alert("No hospitals found nearby (API returned empty)");
+        }
+
+        data.elements.forEach(h => {
+            if(h.lat && h.lon){
+                L.marker([h.lat, h.lon], {icon: hospitalIcon})
+                 .addTo(map)
+                 .bindPopup(h.tags.name || "Hospital");
+            }
+        });
+
+    })
+    .catch(err => {
+        console.log("API ERROR:", err);
+
+        // 🔴 FALLBACK (MANUAL HOSPITALS)
+        alert("Using fallback hospitals");
+
+        let fallback = [
+            [17.3850, 78.4867, "Apollo Hospital"],
+            [17.4010, 78.5560, "Yashoda Hospital"],
+            [17.3700, 78.4800, "Care Hospital"]
+        ];
+
+        fallback.forEach(h => {
+            L.marker([h[0], h[1]], {icon: hospitalIcon})
+             .addTo(map)
+             .bindPopup(h[2]);
+        });
+    });
+}
+
+// 📍 GET LOCATION
+navigator.geolocation.getCurrentPosition(
+    pos => {
+        loadMap(pos.coords.latitude, pos.coords.longitude);
+    },
+    err => {
+        alert("Location blocked! Showing default location.");
+
+        // 🔴 DEFAULT LOCATION (Hyderabad)
+        loadMap(17.3850, 78.4867);
+    }
+);
+
+</script>
+
+</body>
+</html>
