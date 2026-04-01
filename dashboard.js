@@ -2,47 +2,55 @@ window.onload = function () {
 
     // USER
     let user = localStorage.getItem("username");
-    document.getElementById("welcome").innerText =
-        user ? "Welcome " + user + " 👋" : "Welcome Guest";
+    let welcome = document.getElementById("welcome");
+    if (welcome) {
+        welcome.innerText = user ? "Welcome " + user + " 👋" : "Welcome Guest";
+    }
 
     // HEALTH
-    document.getElementById("hr").innerText =
-        localStorage.getItem("hr") || "--";
+    let setVal = (id, key, def="--") => {
+        let el = document.getElementById(id);
+        if (el) el.innerText = localStorage.getItem(key) || def;
+    };
 
-    document.getElementById("bp").innerText =
-        localStorage.getItem("bp") || "--";
-
-    document.getElementById("steps").innerText =
-        localStorage.getItem("steps") || "--";
-
-    document.getElementById("cal").innerText =
-        localStorage.getItem("cal") || "--";
+    setVal("hr", "hr");
+    setVal("bp", "bp");
+    setVal("steps", "steps");
+    setVal("cal", "cal");
 
     // DIET
-    document.getElementById("diet").innerText =
-        localStorage.getItem("diet") || "No Diet";
+    setVal("diet", "diet", "No Diet");
 
     // FITNESS
-    document.getElementById("fitness").innerText =
-        localStorage.getItem("fitnessSteps") || "No Data";
+    setVal("fitness", "fitnessSteps", "No Data");
 
     // MEDICATION
     let med = localStorage.getItem("medicine");
     let time = localStorage.getItem("medTime");
+    let medEl = document.getElementById("medicine");
 
-    document.getElementById("medicine").innerText =
-        med ? med + " at " + time : "No Medicine";
+    if (medEl) {
+        medEl.innerText = med ? med + " at " + time : "No Medicine";
+    }
 
     // APPOINTMENT
     let doc = localStorage.getItem("appointment");
     let date = localStorage.getItem("appDate");
+    let appEl = document.getElementById("appointment");
 
-    document.getElementById("appointment").innerText =
-        doc ? doc + " on " + date : "No Appointment";
+    if (appEl) {
+        appEl.innerText = doc ? doc + " on " + date : "No Appointment";
+    }
 
+    // ✅ CALENDAR FIX
+    let calDiv = document.getElementById("calendar");
 
-    // CALENDAR
+    if (!calDiv) return;
+
+    calDiv.innerHTML = ""; // 🔥 CLEAR OLD DATA
+
     let activeDays = JSON.parse(localStorage.getItem("activeDays")) || [];
+
     let today = new Date().getDate();
 
     if (!activeDays.includes(today)) {
@@ -50,13 +58,15 @@ window.onload = function () {
         localStorage.setItem("activeDays", JSON.stringify(activeDays));
     }
 
-    let calDiv = document.getElementById("calendar");
+    let totalDays = new Date().getDate(); // current day (simple view)
 
     for (let i = 1; i <= 30; i++) {
         let d = document.createElement("div");
         d.className = "day";
 
-        if (activeDays.includes(i)) d.classList.add("active");
+        if (activeDays.includes(i)) {
+            d.classList.add("active");
+        }
 
         d.innerText = i;
         calDiv.appendChild(d);

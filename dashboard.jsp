@@ -173,34 +173,34 @@ body {
 
 
 <div class="cards">
-<div class="card">Heart Rate<br><b><%= hr %></b></div>
-<div class="card">BP<br><b><%= bp %></b></div>
-<div class="card">Steps<br><b><%= steps %></b></div>
-<div class="card">Calories<br><b><%= calories %></b></div>
+<div class="card">Heart Rate<br><b id="hr"><%= hr %></b></div>
+<div class="card">BP<br><b id="bp"><%= bp %></b></div>
+<div class="card">Steps<br><b id="steps"><%= steps %></b></div>
+<div class="card">Calories<br><b id="cal"><%= calories %></b></div>
 </div>
 
 <!-- DIET -->
 <div class="card">
     <h3>Diet Plan</h3>
-    <p><b><%= diet %></b></p>
+    <p><b id="diet"><%= diet %></b></p>
 </div>
 
 <!-- FITNESS -->
 <div class="card">
     <h3>Fitness</h3>
-    <p><%= fitness %></p>
+    <p><b id="fitness"><%= fitness %></b></p>
 </div>
 
 <!-- MEDICATION -->
 <div class="card">
     <h3>Medication Reminder</h3>
-    <p><%= medicine %></p>
+    <p><b id="medicine"><%= medicine %></b></p>
 </div>
 
 <!-- APPOINTMENT -->
 <div class="card">
     <h3>Upcoming Appointment</h3>
-    <p><%= appointment %></p>
+    <p><b id="appointment"><%= appointment %></b></p>
 </div>
 
 <!-- CALENDAR -->
